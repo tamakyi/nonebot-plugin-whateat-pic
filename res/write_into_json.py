@@ -14,8 +14,9 @@ def main():
     current_directory = Path(__file__).resolve().parent
     drink_pic_files = get_file_names(current_directory / "drink_pic")
     eat_pic_files = get_file_names(current_directory / "eat_pic")
+    me_pic_files = get_file_names(current_directory / "me_pic")
 
-    data = {"drink_pic": drink_pic_files, "eat_pic": eat_pic_files}
+    data = {"drink_pic": drink_pic_files, "eat_pic": eat_pic_files, "me_pic": me_pic_files }
 
     output_file = current_directory / "download_list.json"
     with Path.open(output_file, "w", encoding="utf-8") as f:

@@ -16,7 +16,7 @@ class Menu:
     menu_background: Image.Image  # 菜单背景图
     menu_font: ImageFont.FreeTypeFont  # 菜单字体
 
-    def __init__(self, menu_type: Literal["drink", "eat"]) -> None:
+    def __init__(self, menu_type: Literal["drink", "eat", "me"]) -> None:
         # 菜单图片的路径
         self.dish_path = Path(config.whatpic_res_path) / f"{menu_type}_pic"
         # 获取所有菜品的名字

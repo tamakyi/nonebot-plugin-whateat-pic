@@ -38,6 +38,11 @@ drink_pic_matcher = on_alconna(
     use_cmd_start=True,
 )
 
+me_pic_matcher = on_alconna(
+    Alconna("今天蜜什么"),
+    use_cmd_start=True,
+)
+
 view_menu_matcher = on_alconna(
     Alconna("全部菜单", Args["img_type?", str]),
     use_cmd_start=True,
@@ -66,6 +71,11 @@ eat_pic_matcher.shortcut(
 )
 drink_pic_matcher.shortcut(
     r"^[今|明|后]?[天|日]?(早|中|晚)?(上|午|餐|饭|夜宵|宵夜|早|晚)喝(什么|啥|点啥)$",
+    fuzzy=False,
+    prefix=True,
+)
+me_pic_matcher.shortcut(
+    r"^[今|明|后]?[天|日]?(早|中|晚)?(上|午|餐|饭|夜宵|宵夜|早|晚)蜜(什么|啥|点啥)$",
     fuzzy=False,
     prefix=True,
 )
@@ -105,6 +115,23 @@ async def handle_drink_pic(event: Event):
         await send_msg.finish()
 
 
+@me_pic_matcher.handle()
+async def handle_me_pic(event: Event):
+    global TIME
+    global USER_DATA
+    check_max_result, USER_DATA = check_ismax(event, USER_DATA)
+    check_result, remain_time, TIME = check_iscd(TIME)
+    if check_max_result:
+        await UniMessage.text(secrets.choice(MAX_MSG)).finish()
+    elif check_result:
+        await UniMessage.text(f"cd冷却中,还有{remain_time:.2f}秒").finish()
+    else:
+        pic_path, pic_name = random_pic("me")
+        send_msg = UniMessage(Text(f"🎉{BOT_NAME}建议你喝🎉\n{pic_name}"))
+        send_msg.append(Image(path=pic_path))
+        await send_msg.finish()
+
+
 @view_menu_matcher.handle()
 async def handle_view_menu(img_type: Match[str]):
     if img_type.available:
@@ -118,6 +145,8 @@ async def _(img_type: str):
         menu_type = "eat"
     elif menu_type in ["饮料", "饮品"]:
         menu_type = "drink"
+    elif menu_type in ["蜜雪", "蜜", "蜜雪冰城"]:
+        menu_type = "me"
     else:
         await UniMessage.text("菜单类型错误，请重新输入").finish()
 
@@ -153,6 +182,8 @@ async def _(img_type: str):
         add_menu_matcher.set_path_arg("img_type", "eat")
     elif img_type in ["饮料", "饮品"]:
         add_menu_matcher.set_path_arg("img_type", "drink")
+    elif img_type in ["蜜雪", "蜜", "蜜雪冰城"]:
+        add_menu_matcher.set_path_arg("img_type", "me")
     else:
         await UniMessage.text("菜单类型错误，请重新输入").finish()
 
@@ -194,6 +225,8 @@ async def _(img_type: str, name: str):
         img_type = "eat"
     elif img_type in ["饮料", "饮品"]:
         img_type = "drink"
+    elif img_type in ["蜜雪", "蜜", "蜜雪冰城"]:
+        img_type = "me"
     else:
         await UniMessage.text("菜单类型错误，请重新输入").finish()
     try:

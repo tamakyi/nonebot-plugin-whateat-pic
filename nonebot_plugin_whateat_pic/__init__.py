@@ -13,11 +13,12 @@ __plugin_meta__ = PluginMetadata(
     usage="""
     今天吃什么
     今天喝什么
+    今天蜜什么
     添加菜单
     删除菜单
     查看菜单
     """,
     type="application",
-    homepage="https://github.com/Cvandia/nonebot-plugin-whateat-pic",
+    homepage="https://github.com/tamakyi/nonebot-plugin-whateat-pic",
     supported_adapters=inherit_supported_adapters("nonebot_plugin_alconna"),
 )

@@ -10,11 +10,11 @@ from rich.progress import Progress
 from .config import config
 
 available_urls = [
-    "https://raw.githubusercontent.com/Cvandia/nonebot-plugin-whateat-pic/",
-    "https://fastly.jsdelivr.net/gh/Cvandia/nonebot-plugin-whateat-pic@",
-    "https://raw.gitmirror.com/Cvandia/nonebot-plugin-whateat-pic/",
-    "https://ghproxy.cfd/https:/raw.githubusercontent.com/Cvandia/nonebot-plugin-whateat-pic/",
-    "https://ghfast.top/https:/raw.githubusercontent.com/Cvandia/nonebot-plugin-whateat-pic/",
+    "https://raw.githubusercontent.com/tamakyi/nonebot-plugin-whateat-pic/",
+    "https://fastly.jsdelivr.net/gh/tamakyi/nonebot-plugin-whateat-pic@",
+    "https://raw.gitmirror.com/tamakyi/nonebot-plugin-whateat-pic/",
+    "https://ghproxy.cfd/https:/raw.githubusercontent.com/tamakyi/nonebot-plugin-whateat-pic/",
+    "https://ghfast.top/https:/raw.githubusercontent.com/tamakyi/nonebot-plugin-whateat-pic/",
 ]
 
 
@@ -50,6 +50,7 @@ async def check_resource():
     # 检查资源目录下文件是否完整
     drink_pic_path = Path(config.whatpic_res_path) / "drink_pic"  # 本地资源目录
     eat_pic_path = Path(config.whatpic_res_path) / "eat_pic"  # 本地资源目录
+    me_pic_path = Path(config.whatpic_res_path) / "me_pic"
     # TODO: 检查文件是否完整
 
     # 创建下载任务列表
@@ -64,6 +65,9 @@ async def check_resource():
     for item in resource_list["eat_pic"]:
         path_name = "eat_pic/" + item["name"]  # 在线资源路径
         download_list.append((eat_pic_path / item["name"], path_name))
+    for item in resource_list["me_pic"]:
+        path_name = "me_pic/" + item["name"]  # 在线资源路径
+        download_list.append((me_pic_path / item["name"], path_name))
 
     if download_list:
         logger.info("Downloading images ...")
