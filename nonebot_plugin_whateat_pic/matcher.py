@@ -75,7 +75,7 @@ drink_pic_matcher.shortcut(
     prefix=True,
 )
 me_pic_matcher.shortcut(
-    r"^[今|明|后]?[天|日]?(早|中|晚)?(上|午|餐|饭|夜宵|宵夜|早|晚)蜜(什么|啥|点啥)$",
+    r"^(我要蜜)?[今|明|后]?[天|日]?(早|中|晚)?(上|午|餐|饭|夜宵|宵夜|早|晚)蜜(什么|啥|点啥)$",
     fuzzy=False,
     prefix=True,
 )
